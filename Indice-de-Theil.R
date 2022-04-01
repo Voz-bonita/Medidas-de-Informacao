@@ -4,7 +4,7 @@
 # Calcular, para os anos de 2010 a 2021, o indice de desigualdade de renda de Theil
 # utilizando os dados do arquivo Global_Wealth.csv
 
-pacman::p_load("dplyr")
+pacman::p_load("dplyr", "ggplot2")
 
 
 data <- read.csv("Global_Wealth.csv", check.names = FALSE)
@@ -19,13 +19,21 @@ for (i in 1:n_anos) {
     Ri <- unlist(filter(data, `Ano/Categoria` == paste(ano, "renda", sep = "-"))[2:5])
     Ni <- unlist(filter(data, `Ano/Categoria` == paste(ano, "adultos", sep = "-"))[2:5])
 
-    R <- sum(rendas)
-    N <- sum(adultos)
+    R <- sum(Ri)
+    N <- sum(Ni)
 
     Theil[i] <- round(log2(N) - sum(Ri/R * log2(Ri/Ni/R)), 3)
 }
-
-
+hist_theil <- data.frame(
+    "Anos" = anos,
+    "Theil" = Theil
+)
+ggplot(hist_theil) +
+    geom_line(aes(x = `Anos`, y = `Theil`), size = 1.4) +
+    geom_point(aes(x = `Anos`, y = `Theil`), size = 3) +
+    scale_x_continuous(breaks = anos) +
+    ylab("Indíce de Desigualdade de Renda de Theil") +
+    theme_bw()
 
 
 
