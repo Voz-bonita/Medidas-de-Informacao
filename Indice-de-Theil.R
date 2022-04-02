@@ -16,8 +16,8 @@ Theil <- numeric(n_anos)
 
 for (i in 1:n_anos) {
     ano <- anos[i]
-    Ri <- unlist(filter(data, `Ano/Categoria` == paste(ano, "renda", sep = "-"))[2:5])
-    Ni <- unlist(filter(data, `Ano/Categoria` == paste(ano, "adultos", sep = "-"))[2:5])
+    Ri <- unlist(filter(data, `Ano` == ano & `Renda/Adultos` == "Renda")[3:6])
+    Ni <- unlist(filter(data, `Ano` == ano & `Renda/Adultos` == "Adultos")[3:6])
 
     R <- sum(Ri)
     N <- sum(Ni)
@@ -34,11 +34,3 @@ ggplot(hist_theil) +
     scale_x_continuous(breaks = anos) +
     ylab("Indíce de Desigualdade de Renda de Theil") +
     theme_bw()
-
-
-
-
-
-
-
-

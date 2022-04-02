@@ -40,15 +40,15 @@ r2011 <- c(7.6, 33.5, 100.6, 89.1)*10^12
 p2010 <- c(3038492, 1044985, 334418, 24210)*10^3
 r2010 <- c(8.2, 32.1, 85.0, 69.2)*10^12
 
-raw_data <- data.frame(matrix(nrow = 2*(2021-2010), ncol = 5)) %>%
-  rename_all(~c("Ano/Categoria", "< 10k USD", "10k USD - 100k USD",
+raw_data <- data.frame(matrix(nrow = 2*(2021-2010), ncol = 6)) %>%
+  rename_all(~c("Ano", "Renda/Adultos", "< 10k USD", "10k USD - 100k USD",
                 "100k USD - 1000k USD", "1000k+ USD"))
 
 anos <- 2010:2021
 n_anos <- length(anos)
 for (i in 1:n_anos) {
-  pessoas <- c(paste(anos[i], "adultos", sep = "-"), get(paste0("p", anos[i])))
-  renda <- c(paste(anos[i], "renda", sep = "-"), get(paste0("r", anos[i])))
+  pessoas <- c(anos[i], "Adultos", get(paste0("p", anos[i])))
+  renda <- c(anos[i], "Renda", get(paste0("r", anos[i])))
 
   raw_data[(i*2-1),] <- pessoas
   raw_data[(i*2),] <- renda
